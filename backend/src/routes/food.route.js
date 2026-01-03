@@ -14,10 +14,14 @@ const upload = multer({
 // Call to this API prefix=> /api/food "/" - this is the route
 // http://localhost:3000/api/food/
 //                     [protected]
+// POST /api/food
 router.post('/',
     authMiddleware.authFoodPartnerMiddleware,
     upload.single('video'), 
     foodController.createFood
 );
+// GET 
+router.get('/', )
+
 
 module.exports = router;
