@@ -1,5 +1,5 @@
 const userModel = require('../models/user.model');
-const foodPartnerModel = require('../models/foodPartner.model');
+const foodPartnerModel = require('../models/foodpartner.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -83,7 +83,7 @@ function logoutUser(req, res){
 // Food-Partner Controllers
 
 async function registerFoodPartner(req, res){
-    const { name, email, password } = req.body;
+    const { name, email, password, contactName, phoneNumber, address} = req.body;
     const isAccountAlreadyExist = await foodPartnerModel.findOne({ email });
 
     if(isAccountAlreadyExist){
@@ -97,7 +97,10 @@ async function registerFoodPartner(req, res){
     const foodPartner = await foodPartnerModel.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        contactName,
+        phoneNumber,
+        address,
     });
     
     const token = jwt.sign({
@@ -112,6 +115,9 @@ async function registerFoodPartner(req, res){
             _id: foodPartner._id,
             email: foodPartner.email,
             fullName: foodPartner.fullName,
+            contactName: foodPartner.contactName,
+            phoneNumber: foodPartner.phoneNumber,
+            address: foodPartner.address,
         },
     });
 }
