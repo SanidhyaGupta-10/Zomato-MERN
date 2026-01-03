@@ -21,7 +21,10 @@ router.post('/',
     foodController.createFood
 );
 // GET 
-router.get('/', )
+router.get('/', 
+    authMiddleware.authUserMiddleware,
+    foodController.getFoodItems,
+)
 
 
 module.exports = router;
