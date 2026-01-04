@@ -96,11 +96,11 @@ async function registerFoodPartner(req, res){
 
     const foodPartner = await foodPartnerModel.create({
         name,
-        email,
-        password: hashedPassword,
         contactName,
         phoneNumber,
         address,
+        email,
+        password: hashedPassword,
     });
     
     const token = jwt.sign({
@@ -113,11 +113,11 @@ async function registerFoodPartner(req, res){
         message: "User registered successfully",
         user:{
             _id: foodPartner._id,
-            email: foodPartner.email,
-            fullName: foodPartner.fullName,
             contactName: foodPartner.contactName,
             phoneNumber: foodPartner.phoneNumber,
             address: foodPartner.address,
+            email: foodPartner.email,
+            password: foodPartner.password,
         },
     });
 }
