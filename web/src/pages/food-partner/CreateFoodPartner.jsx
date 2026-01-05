@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const CreateFoodPartner = () => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [videoFile, setVideoFile] = useState(null)
   const [preview, setPreview] = useState(null)
+
+  const navigate = useNavigate()
 
   const handleVideoChange = (e) => {
     const file = e.target.files && e.target.files[0]
@@ -17,10 +21,22 @@ const CreateFoodPartner = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // UI-only: log values. Replace with API call when ready.
-    console.log('Submit video:', { name, description, videoFile })
+
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('description', description)
+    if (videoFile) {
+      formData.append('video', videoFile)
+    }
+
+    const res = await axios.post('http://localhost:3000/api/food', formData, {
+      withCredentials: true,
+    })
+    console.log(res.data)
+
+    navigate('/')
   }
 
   return (
