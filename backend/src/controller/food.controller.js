@@ -1,6 +1,10 @@
 const foodModel = require('../models/food.model');
 const storageService = require('../services/storage.service');
+const likeModel = require('../models/likes.model');
 const { v4: uuid } = require('uuid');
+const saveModel = require('../models/save.model');
+
+
 
 async function createFood(req, res) {
   try {
@@ -34,14 +38,76 @@ async function createFood(req, res) {
 }
 
 async function getFoodItems(req, res) {
-    const foodItems = await foodModel.find({})
-    res.status(200).json({
-        message: 'Food items fetched successfully',
-        foodItems
-    })
+  const foodItems = await foodModel.find({})
+  res.status(200).json({
+    message: 'Food items fetched successfully',
+    foodItems
+  })
+}
+
+async function likeFood(req, res) {
+  const { foodId } = req.body;
+  const user = req.user;
+
+  const isAlreadyLiked = await likeModel.findOne({
+    user: user._id,
+    food: foodId
+  });
+  if (isAlreadyLiked) {
+    await likeModel.deleteOne({
+      user: user._id,
+      food: foodId
+    });
+
+    await foodModel.findByIdAndUpdate(foodId, {
+      $inc: { likeCount: -1 }
+    });
+
+
+    return res.status(200).json({ message: 'Food unliked successfully' });
+  }
+
+  const like = await likeModel.create({
+    user: user._id,
+    food: foodId
+  });
+
+  await foodModel.findByIdAndUpdate(foodId, {
+    $inc: { likeCount: 1 }
+  });
+
+
+  return res.status(201).json({ message: 'Food liked successfully', like });
+}
+
+async function saveFood(req, res) {
+  const { foodId } = req.body;
+  const user = req.user;
+
+  const isAlreadySaved = await saveModel.findOne({
+    food: foodId,
+    user: user._id
+  });
+  if (isAlreadySaved) {
+    await saveModel.deleteOne({
+      food: foodId,
+      user: user._id
+    });
+
+    return res.status(200).json({ message: 'Food unsaved successfully' });
+  }
+
+  const save = await foodModel.create({
+    food: foodId,
+    user: user._id
+  });
+
+  return res.status(201).json({ message: 'Food saved successfully', save });
 }
 
 module.exports = {
-    createFood,
-    getFoodItems
+  createFood,
+  getFoodItems,
+  likeFood,
+  saveFood
 };
