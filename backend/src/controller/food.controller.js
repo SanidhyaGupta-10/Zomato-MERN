@@ -97,7 +97,7 @@ async function saveFood(req, res) {
     return res.status(200).json({ message: 'Food unsaved successfully' });
   }
 
-  const save = await foodModel.create({
+  const save = await saveModel.create({
     food: foodId,
     user: user._id
   });
