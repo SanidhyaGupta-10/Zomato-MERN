@@ -1,0 +1,49 @@
+import foodPartnerModel from '../models/foodpartner.model';
+import jwt from 'jsonwebtoken';
+import userModel from '../models/user.model';
+import { Request, Response, NextFunction } from 'express';
+
+async function authFoodPartnerMiddleware(req: any, res: Response, next: NextFunction): Promise<void> {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+    try {
+        // it will verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+        const foodPartner = await foodPartnerModel.findById((decoded as any).id)
+
+        req.foodPartner = foodPartner;
+        next();
+
+    } catch (err) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+}
+
+async function authUserMiddleware(req: any, res: Response, next: NextFunction): Promise<void> {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+        const user = await userModel.findById((decoded as any).id)
+
+        req.user = user;
+        next();
+
+    } catch (err) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+}
+
+export { authFoodPartnerMiddleware, authUserMiddleware };

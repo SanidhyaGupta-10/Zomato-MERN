@@ -1,19 +1,18 @@
-const foodModel = require('../models/food.model');
-const storageService = require('../services/storage.service');
-const likeModel = require('../models/likes.model');
-const { v4: uuid } = require('uuid');
-const saveModel = require('../models/save.model');
+import foodModel from '../models/food.model';
+import { uploadFile } from '../services/storage.service';
+import likeModel from '../models/likes.model';
+import { v4 as uuid } from 'uuid';
+import saveModel from '../models/save.model';
+import { Request, Response } from 'express';
 
-
-
-async function createFood(req, res) {
+async function createFood(req: any, res: Response): Promise<void> {
   try {
     console.log(req.foodPartner)
     console.log(req.body)
     console.log(req.file)
 
     // Upload video
-    const uploadResult = await storageService.uploadFile(
+    const uploadResult = await uploadFile(
       req.file.buffer,
       `${uuid()}-${req.file.originalname}`
     );
@@ -26,18 +25,18 @@ async function createFood(req, res) {
       foodPartner: req.foodPartner._id
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       message: 'Video created successfully',
       food
     });
 
   } catch (error) {
     console.error('Create video error:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
 
-async function getFoodItems(req, res) {
+async function getFoodItems(req: any, res: Response): Promise<void> {
   const foodItems = await foodModel.find({})
   res.status(200).json({
     message: 'Food items fetched successfully',
@@ -45,7 +44,7 @@ async function getFoodItems(req, res) {
   })
 }
 
-async function likeFood(req, res) {
+async function likeFood(req: any, res: Response): Promise<void> {
   const { foodId } = req.body;
   const user = req.user;
 
@@ -63,8 +62,8 @@ async function likeFood(req, res) {
       $inc: { likeCount: -1 }
     });
 
-
-    return res.status(200).json({ message: 'Food unliked successfully' });
+    res.status(200).json({ message: 'Food unliked successfully' });
+    return;
   }
 
   const like = await likeModel.create({
@@ -76,11 +75,10 @@ async function likeFood(req, res) {
     $inc: { likeCount: 1 }
   });
 
-
-  return res.status(201).json({ message: 'Food liked successfully', like });
+  res.status(201).json({ message: 'Food liked successfully', like });
 }
 
-async function saveFood(req, res) {
+async function saveFood(req: any, res: Response): Promise<void> {
   const { foodId } = req.body;
   const user = req.user;
 
@@ -94,7 +92,8 @@ async function saveFood(req, res) {
       user: user._id
     });
 
-    return res.status(200).json({ message: 'Food unsaved successfully' });
+    res.status(200).json({ message: 'Food unsaved successfully' });
+    return;
   }
 
   const save = await saveModel.create({
@@ -102,12 +101,7 @@ async function saveFood(req, res) {
     user: user._id
   });
 
-  return res.status(201).json({ message: 'Food saved successfully', save });
+  res.status(201).json({ message: 'Food saved successfully', save });
 }
 
-module.exports = {
-  createFood,
-  getFoodItems,
-  likeFood,
-  saveFood
-};
+export { createFood, getFoodItems, likeFood, saveFood };

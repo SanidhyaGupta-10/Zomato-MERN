@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-function ConnectDB() {
+function ConnectDB(): void {
     if (!process.env.MONGO_URI) {
         console.warn("MongoDB connection string (MONGO_URI) is not set. Database will not be available.");
         return;
@@ -14,4 +14,5 @@ function ConnectDB() {
         console.error("MongoDB connection failed:", err.message);
     });
 }
-module.exports = ConnectDB;
+
+export default ConnectDB;
