@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const foodPartnerSchema = new mongoose.Schema({
   name: {
@@ -27,9 +27,8 @@ const foodPartnerSchema = new mongoose.Schema({
   },
 });
 
-// ✅ Prevent OverwriteModelError
 const FoodPartner =
   mongoose.models.foodPartner ||
   mongoose.model("foodPartner", foodPartnerSchema);
 
-module.exports = FoodPartner;
+export default FoodPartner;

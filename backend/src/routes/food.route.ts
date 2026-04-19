@@ -1,6 +1,6 @@
 import express from 'express';
-import foodController from '../controller/food.controller';
-import authMiddleware from '../middlewares/auth.middleware';
+import { createFood, getFoodItems, likeFood, saveFood } from '../controller/food.controller';
+import { authFoodPartnerMiddleware, authUserMiddleware } from '../middlewares/auth.middleware';
 import multer from 'multer';
 
 const router = express.Router();
@@ -17,24 +17,24 @@ const upload = multer({
 //                     [protected]
 // POST /api/food
 router.post('/',
-    authMiddleware.authFoodPartnerMiddleware,
+    authFoodPartnerMiddleware,
     upload.single('video'),
-    foodController.createFood
+    createFood
 );
 // GET
 router.get('/',
-    authMiddleware.authUserMiddleware,
-    foodController.getFoodItems,
+    authUserMiddleware,
+    getFoodItems,
 )
 // GET
 router.post('/like',
-    authMiddleware.authUserMiddleware,
-    foodController.likeFood
+    authUserMiddleware,
+    likeFood
 )
 
 router.post('/save',
-    authMiddleware.authUserMiddleware,
-    foodController.saveFood
+    authUserMiddleware,
+    saveFood
 )
 
 export default router;

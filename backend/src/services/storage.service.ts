@@ -1,19 +1,25 @@
-const ImageKit = require('@imagekit/nodejs');
-const { toFile } = require('@imagekit/nodejs');
+import ImageKit from '@imagekit/nodejs';
+import { toFile } from '@imagekit/nodejs';
 
-const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-});
+let imagekit: any = null;
 
-async function uploadFile(buffer, fileName) {
-  return await imagekit.files.upload({
+function getImageKit() {
+  if (!imagekit) {
+    imagekit = new ImageKit({
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+      urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+    });
+  }
+  return imagekit;
+}
+
+async function uploadFile(buffer: any, fileName: string) {
+  const kit = getImageKit();
+  return await kit.files.upload({
     file: await toFile(buffer, fileName),
     fileName
   });
 }
 
-module.exports = {
-  uploadFile, // <-- Make sure this is exported
-};
+export { uploadFile };

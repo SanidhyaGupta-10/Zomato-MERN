@@ -1,6 +1,6 @@
 import express from 'express';
-import foodPartnerController from '../controller/food-partner.controller';
-import authMiddleware from '../middlewares/auth.middleware';
+import { getFoodByPartnerId } from '../controller/food-partner.controller';
+import { authUserMiddleware } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
@@ -9,8 +9,8 @@ const router = express.Router();
 
 // GET /api/food-partner/:id
 router.get('/:id',
-    authMiddleware.authUserMiddleware,
-    foodPartnerController.getFoodByPartnerId
+    authUserMiddleware,
+    getFoodByPartnerId
 )
 
 export default router;

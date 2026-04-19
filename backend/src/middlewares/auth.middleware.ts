@@ -1,8 +1,9 @@
-const foodPartnerModel = require('../models/foodpartner.model');
-const jwt = require('jsonwebtoken');
-const userModel = require('../models/user.model');
+import foodPartnerModel from '../models/foodpartner.model';
+import jwt from 'jsonwebtoken';
+import userModel from '../models/user.model';
+import { Request, Response, NextFunction } from 'express';
 
-async function authFoodPartnerMiddleware(req, res, next) {
+async function authFoodPartnerMiddleware(req: any, res: Response, next: NextFunction): Promise<void> {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({
@@ -11,8 +12,8 @@ async function authFoodPartnerMiddleware(req, res, next) {
     }
     try {
         // it will verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const foodPartner = await foodPartnerModel.findById(decoded.id)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+        const foodPartner = await foodPartnerModel.findById((decoded as any).id)
 
         req.foodPartner = foodPartner;
         next();
@@ -24,7 +25,7 @@ async function authFoodPartnerMiddleware(req, res, next) {
     }
 }
 
-async function authUserMiddleware(req, res, next) {
+async function authUserMiddleware(req: any, res: Response, next: NextFunction): Promise<void> {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({
@@ -32,8 +33,8 @@ async function authUserMiddleware(req, res, next) {
         })
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await userModel.findById(decoded.id)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+        const user = await userModel.findById((decoded as any).id)
 
         req.user = user;
         next();
@@ -45,8 +46,4 @@ async function authUserMiddleware(req, res, next) {
     }
 }
 
-module.exports = {
-    authFoodPartnerMiddleware,
-    authUserMiddleware
-
-}
+export { authFoodPartnerMiddleware, authUserMiddleware };

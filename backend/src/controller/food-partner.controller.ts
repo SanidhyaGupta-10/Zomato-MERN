@@ -1,22 +1,25 @@
-const foodPartnerModel = require('../models/foodpartner.model')
-const foodModel = require('../models/food.model')
+import foodPartnerModel from '../models/foodpartner.model';
+import foodModel from '../models/food.model';
+import mongoose from 'mongoose';
+import { Response } from 'express';
 
-async function getFoodByPartnerId(req, res) {
+async function getFoodByPartnerId(req: any, res: Response): Promise<void> {
     const foodPartnerId = req.params.id;
 
     // Validate ObjectId before querying to avoid CastError
-    const mongoose = require('mongoose')
     if (!mongoose.Types.ObjectId.isValid(foodPartnerId)) {
-        return res.status(400).json({ message: 'Invalid food partner id' });
+        res.status(400).json({ message: 'Invalid food partner id' });
+        return;
     }
 
     const foodPartner = await foodPartnerModel.findById(foodPartnerId);
     const foodItemsbyFoodPartner = await foodModel.find({ foodPartner: foodPartnerId });
 
     if (!foodPartner) {
-        return res.status(404).json({ message: 'Food Partner not found' });
+        res.status(404).json({ message: 'Food Partner not found' });
+        return;
     }
-    return res.status(200).json({ 
+    res.status(200).json({ 
         message: 'Food Partner fetched successfully',
         foodPartner: {
             ...foodPartner.toObject(),
@@ -25,6 +28,4 @@ async function getFoodByPartnerId(req, res) {
     });
 }
 
-module.exports = {
-    getFoodByPartnerId
-};
+export { getFoodByPartnerId };
