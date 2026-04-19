@@ -1,8 +1,9 @@
-const express = require('express');
-const foodController = require('../controller/food.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
+import express from 'express';
+import foodController from '../controller/food.controller';
+import authMiddleware from '../middlewares/auth.middleware';
+import multer from 'multer';
+
 const router = express.Router();
-const multer = require('multer');
 
 // express can't read any files
 // that's why we installed multer
@@ -17,23 +18,23 @@ const upload = multer({
 // POST /api/food
 router.post('/',
     authMiddleware.authFoodPartnerMiddleware,
-    upload.single('video'), 
+    upload.single('video'),
     foodController.createFood
 );
-// GET 
-router.get('/', 
+// GET
+router.get('/',
     authMiddleware.authUserMiddleware,
     foodController.getFoodItems,
 )
-// GET 
-router.post('/like', 
+// GET
+router.post('/like',
     authMiddleware.authUserMiddleware,
     foodController.likeFood
 )
 
-router.post('/save', 
+router.post('/save',
     authMiddleware.authUserMiddleware,
     foodController.saveFood
 )
 
-module.exports = router;
+export default router;
