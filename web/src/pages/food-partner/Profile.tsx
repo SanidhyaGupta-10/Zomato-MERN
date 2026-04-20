@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { apiGet } from '@utils/api'
-import type { IFoodPartner, IFood } from '../../../types/models.types'
+import type { IFoodPartner, IFood } from '../../types/models.types'
 
 interface ProfileData {
     partner: IFoodPartner;

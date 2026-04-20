@@ -60,7 +60,7 @@ export const validateRequired = (value: string, fieldName: string): ValidationRe
  * Accepts 10-15 digit numbers with optional +, -, ()
  */
 export const validatePhoneNumber = (phone: string): ValidationResult => {
-    const phoneRegex = /^[\d\s\-\+\(\)]{10,15}$/
+    const phoneRegex = /^[\d\s\-+()]{10,15}$/
     if (!phone) {
         return { isValid: false, error: 'Phone number is required' }
     }

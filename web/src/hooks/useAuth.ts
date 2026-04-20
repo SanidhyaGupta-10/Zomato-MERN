@@ -81,7 +81,7 @@ export const useAuth = (): UseAuthReturn => {
                 return false
             }
 
-            const token = (response as Record<string, unknown>).token as string | undefined
+            const token = (response as unknown as Record<string, unknown>).token as string | undefined
             if (token) {
                 setAuthToken(token)
                 setToken(token)
@@ -112,7 +112,7 @@ export const useAuth = (): UseAuthReturn => {
                 return false
             }
 
-            const token = (response as Record<string, unknown>).token as string | undefined
+            const token = (response as unknown as Record<string, unknown>).token as string | undefined
             if (token) {
                 setAuthToken(token)
                 setToken(token)
@@ -152,7 +152,7 @@ export const useAuth = (): UseAuthReturn => {
                     return false
                 }
 
-                const token = (response as Record<string, unknown>).token as string | undefined
+                const token = (response as unknown as Record<string, unknown>).token as string | undefined
                 if (token) {
                     setAuthToken(token)
                     setToken(token)
@@ -185,7 +185,7 @@ export const useAuth = (): UseAuthReturn => {
                 return false
             }
 
-            const token = (response as Record<string, unknown>).token as string | undefined
+            const token = (response as unknown as Record<string, unknown>).token as string | undefined
             if (token) {
                 setAuthToken(token)
                 setToken(token)

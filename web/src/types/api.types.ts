@@ -3,7 +3,7 @@
  * These types define all request payloads and response structures for backend API endpoints
  */
 
-import type { IUser, IFoodPartner, IFood, ILike, ISave } from './models.types'
+import type { IFood, ILike, ISave } from './models.types'
 
 // ============================================================================
 // Auth API Types

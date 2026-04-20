@@ -10,21 +10,13 @@ export interface StoredAuthToken {
     expiresAt?: number;
 }
 
-export interface StoredUser extends Omit<IUser, 'password'> {
-    // User data stored in localStorage (without password for security)
-}
+export type StoredUser = Omit<IUser, 'password'>
 
-export interface StoredFoodPartner extends Omit<IFoodPartner, 'password'> {
-    // Food Partner data stored in localStorage (without password for security)
-}
+export type StoredFoodPartner = Omit<IFoodPartner, 'password'>
 
-export interface StoredLikes {
-    [foodId: string]: boolean; // Map of liked food IDs
-}
+export type StoredLikes = Record<string, boolean> // Map of liked food IDs
 
-export interface StoredSaves {
-    [foodId: string]: boolean; // Map of saved food IDs
-}
+export type StoredSaves = Record<string, boolean> // Map of saved food IDs
 
 export interface LocalStorageSchema {
     authToken?: string;

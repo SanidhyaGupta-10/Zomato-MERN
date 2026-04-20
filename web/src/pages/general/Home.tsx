@@ -1,7 +1,7 @@
-import type { FC, RefObject } from 'react'
+import type { FC } from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import type { IFood } from '@types/models.types'
+import type { IFood } from '../../types/models.types'
 import { useFood } from '@hooks/useFood'
 import { useSaves } from '@hooks/useSaves'
 
@@ -12,7 +12,7 @@ const Home: FC = () => {
 
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
     const scrollContainerRef = useRef<HTMLDivElement>(null)
-    const scrollTimeoutRef = useRef<NodeJS.Timeout | undefined>()
+    const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
     // Handle scroll snap behavior
     useEffect(() => {

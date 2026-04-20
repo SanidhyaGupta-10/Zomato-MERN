@@ -9,6 +9,7 @@ export default defineConfig([
     globalIgnores(['dist', 'node_modules']),
     {
         files: ['**/*.{js,jsx,ts,tsx}'],
+        ignores: ['**/*.config.ts', '**/eslint.config.ts', '**/vite.config.ts'],
         extends: [
             js.configs.recommended,
             ...tseslint.configs.recommended,
@@ -40,10 +41,14 @@ export default defineConfig([
         },
     },
     {
-        files: ['**/*.config.ts'],
+        files: ['**/*.config.ts', '**/eslint.config.ts', '**/vite.config.ts'],
         extends: [...tseslint.configs.recommended],
         languageOptions: {
             parser: tseslint.parser,
+            parserOptions: {
+                ecmaVersion: 'latest',
+                sourceType: 'module',
+            },
         },
     },
 ])
