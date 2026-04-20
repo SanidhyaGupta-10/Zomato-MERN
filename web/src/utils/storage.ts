@@ -3,8 +3,8 @@
  * Provides type-safe getters and setters for browser localStorage
  */
 
-import type { StoredUser, StoredFoodPartner, StoredLikes, StoredSaves } from '@types/storage.types'
-import type { IUser, IFoodPartner } from '@types/models.types'
+import type { StoredUser, StoredFoodPartner, StoredLikes, StoredSaves } from '../types/storage.types'
+import type { IUser, IFoodPartner } from '../types/models.types'
 
 const STORAGE_KEYS = {
     AUTH_TOKEN: 'authToken',

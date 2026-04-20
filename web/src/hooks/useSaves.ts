@@ -4,7 +4,7 @@
  */
 
 import { useState, useCallback, useEffect } from 'react'
-import type { IFood } from '@types/index'
+import type { IFood } from '../types/models.types'
 import { apiGet, apiPost } from '@utils/api'
 import {
     addSave,

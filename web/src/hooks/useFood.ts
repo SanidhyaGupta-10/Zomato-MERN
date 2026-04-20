@@ -4,7 +4,8 @@
  */
 
 import { useState, useCallback, useEffect } from 'react'
-import type { IFood, CreateFoodPayload } from '@types/index'
+import type { IFood } from '../types/models.types'
+import type { CreateFoodPayload } from '../types/api.types'
 import { apiGet, apiPost } from '@utils/api'
 
 export interface UseFoodReturn {

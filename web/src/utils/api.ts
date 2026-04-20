@@ -4,8 +4,8 @@
  */
 
 import axios, { type AxiosInstance, type AxiosError, type AxiosResponse } from 'axios'
-import { getAuthToken, removeAuthToken, clearAuthStorage } from './storage'
-import type { ApiResponse } from '@types/api.types'
+import { getAuthToken, clearAuthStorage } from './storage'
+import type { ApiResponse } from '../types/api.types'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 

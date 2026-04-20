@@ -42,12 +42,9 @@ export interface AuthResponse<T> {
     error?: string;
 }
 
-export type UserAuthResponse = AuthResponse<IUser>;
-export type FoodPartnerAuthResponse = AuthResponse<IFoodPartner>;
-
-// ============================================================================
-// Food API Types
-// ============================================================================
+export interface TokenizedResponse<T> extends AuthResponse<T> {
+    token: string;
+}
 
 export interface CreateFoodPayload {
     name: string;

@@ -4,8 +4,10 @@
  */
 
 import { useState, useCallback, useEffect } from 'react'
-import type { 
-    IUser, IFoodPartner, UserAuthResponse, FoodPartnerAuthResponse, RegisterUserPayload, LoginUserPayload, RegisterFoodPartnerPayload, LoginFoodPartnerPayload } from '@types/index'
+import type {
+    IUser, IFoodPartner
+} from '../types/models.types'
+import type { RegisterUserPayload, LoginUserPayload, RegisterFoodPartnerPayload, LoginFoodPartnerPayload } from '../types/api.types'
 import { apiPost } from '@utils/api'
 import {
     getAuthToken,
@@ -79,9 +81,10 @@ export const useAuth = (): UseAuthReturn => {
                 return false
             }
 
-            if (response.token) {
-                setAuthToken(response.token)
-                setToken(response.token)
+            const token = (response as Record<string, unknown>).token as string | undefined
+            if (token) {
+                setAuthToken(token)
+                setToken(token)
             }
 
             setStoredUser(response.data)
@@ -109,9 +112,10 @@ export const useAuth = (): UseAuthReturn => {
                 return false
             }
 
-            if (response.token) {
-                setAuthToken(response.token)
-                setToken(response.token)
+            const token = (response as Record<string, unknown>).token as string | undefined
+            if (token) {
+                setAuthToken(token)
+                setToken(token)
             }
 
             setStoredUser(response.data)
@@ -148,9 +152,10 @@ export const useAuth = (): UseAuthReturn => {
                     return false
                 }
 
-                if (response.token) {
-                    setAuthToken(response.token)
-                    setToken(response.token)
+                const token = (response as Record<string, unknown>).token as string | undefined
+                if (token) {
+                    setAuthToken(token)
+                    setToken(token)
                 }
 
                 setStoredFoodPartner(response.data)
@@ -180,9 +185,10 @@ export const useAuth = (): UseAuthReturn => {
                 return false
             }
 
-            if (response.token) {
-                setAuthToken(response.token)
-                setToken(response.token)
+            const token = (response as Record<string, unknown>).token as string | undefined
+            if (token) {
+                setAuthToken(token)
+                setToken(token)
             }
 
             setStoredFoodPartner(response.data)

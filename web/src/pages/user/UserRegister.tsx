@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '@hooks/useAuth'
 import { validateEmail, validatePassword, validateRequired, validatePasswordMatch } from '@utils/validation'
-import type { ValidationResult } from '@utils/validation'
 
 interface FormErrors {
     fullName?: string;
