@@ -105,31 +105,35 @@ The application follows a modern full-stack architecture with:
 ### **Architecture Diagram**
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Frontend (React + TS)                    │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  Pages: Home, Saved, Login, Register, Partner Profile   │  │
-│  │  Hooks: useAuth, useFood, useSaves                       │  │
-│  │  Components: Routing, UI Components                      │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└────────────────────────┬─────────────────────────────────────────┘
-                         │ HTTP/REST API (Axios)
-                         │
-┌────────────────────────▼─────────────────────────────────────────┐
-│                  Backend (Express + TypeScript)                  │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  Controllers: Auth, Food, Food Partner                  │  │
-│  │  Middleware: Authentication, Error Handling             │  │
-│  │  Services: Storage (ImageKit)                           │  │
-│  │  Routes: /api/auth, /api/food, /api/food-partner       │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└────────────────────────┬─────────────────────────────────────────┘
-                         │ Mongoose ODM
-                         │
-┌────────────────────────▼─────────────────────────────────────────┐
-│              Database (MongoDB - Cloud/Local)                    │
-│  Collections: Users, FoodPartners, Foods, Likes, Saves           │
-└─────────────────────────────────────────────────────────────────┘
+        ╔════════════════════════════════════════════╗
+        ║    Frontend (React + TypeScript)           ║
+        ╠════════════════════════════════════════════╣
+        ║ Pages: Home, Saved, Login, Register,       ║
+        ║        Partner Profile                     ║
+        ║ Hooks: useAuth, useFood, useSaves          ║
+        ║ Components: Routing, UI Components         ║
+        ╚════════════════════════════════════════════╝
+                            ▲
+                            │ HTTP/REST API (Axios)
+                            │
+        ╔════════════════════╧════════════════════════╗
+        ║  Backend (Express + TypeScript)             ║
+        ╠═════════════════════════════════════════════╣
+        ║ Controllers: Auth, Food, Food Partner       ║
+        ║ Middleware: Authentication, Error Handling  ║
+        ║ Services: Storage (ImageKit)                ║
+        ║ Routes: /api/auth, /api/food,               ║
+        ║         /api/food-partner                   ║
+        ╚════════════════════╤════════════════════════╝
+                            │
+                            │ Mongoose ODM
+                            ▼
+        ╔════════════════════════════════════════════╗
+        ║  Database (MongoDB - Cloud/Local)          ║
+        ╠════════════════════════════════════════════╣
+        ║ Collections: Users, FoodPartners,          ║
+        ║             Foods, Likes, Saves            ║
+        ╚════════════════════════════════════════════╝
 ```
 
 ### **Data Flow**
